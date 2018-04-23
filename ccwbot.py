@@ -29,7 +29,7 @@ def is_replied(submission_id):
 def get_submissions(reddit):
   print("Fetching new posts...")
   posts = []
-  for post in reddit.subreddit('ccw').new(limit=50):
+  for post in reddit.subreddit('ccw').new(limit=25):
     posts.append(post)
   print("Returning " + str(len(posts)) + " reddit posts")
   return posts
