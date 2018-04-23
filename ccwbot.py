@@ -45,19 +45,17 @@ def get_questions(posts):
   return questions
 
 def engine(questions):
-  with open('logs.txt','a+') as logs:
-    for submission in questions:
-      print(logs.read().splitlines())
-      if submission.id not in logs.read().splitlines():
-        try:
-          # submission.reply("It looks like you asked a question in /r/CCW. There's a good chance you're asking what gun you should buy/carry. The answer is a Glock 19.")
-          print("Replied to '" + submission.title + "'")
-          logs.write(str(submission.id) + "\n")
-          print("Sleeping 500 seconds")
-          sleep(5)
-        except:
-          "Couldn't reply for some reason"
-      sleep
+  for submission in questions:
+    if not is_replied(submission.id)
+      try:
+        submission.reply("It looks like you asked a question in /r/CCW. There's a good chance you're asking what gun you should buy/carry. The answer is a Glock 19.")
+        print("Replied to '" + submission.title + "'")
+        record_commented(submission.id)
+        print("Sleeping 500 seconds")
+        sleep(500)
+      except:
+        "Couldn't reply for some reason"
+    sleep
 
 
 def main():
