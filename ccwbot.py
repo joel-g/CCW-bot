@@ -1,7 +1,5 @@
 import praw
-from time import sleep
-# 
-  
+from time import sleep 
 
 def authenticate():
   print('Authenticating...\n')
@@ -11,21 +9,22 @@ def authenticate():
 
 def record_commented(submission_id):
   print("Logging comment...")
-  with open("commented.txt", 'a+') as comment_log:
+  with open("logs.txt", 'a+') as comment_log:
     comment_log.write(submission_id + '\n')
 
 def is_replied(submission_id):
   print("Checking to see if this has already been commented...")
   sleep(1)
-  readable = open("logs.txt", "r")
-  if submission_id in readable.read().splitlines():
-    print("It has been commented.\n")
-    sleep(1)
-    return True
-  else:
-    print("It has not been commented.\n")
-    sleep(1)
-    return False
+  with open("logs.txt", "r") as logs:
+    print(logs.read().splitlines())
+    if submission_id in logs.read().splitlines():
+      print("It has been commented.\n")
+      sleep(1)
+      return True
+    else:
+      print("It has not been commented.\n")
+      sleep(1)
+      return False
 
 def get_submissions(reddit):
   print("Fetching new posts...")
@@ -46,17 +45,16 @@ def get_questions(posts):
 
 def engine(questions):
   for submission in questions:
-    if not is_replied(submission.id)
+    print(submission.id)
+    if not is_replied(submission.id):
       try:
-        submission.reply("It looks like you asked a question in /r/CCW. There's a good chance you're asking what gun you should buy/carry. The answer is a Glock 19.")
+        # submission.reply("It looks like you asked a question in /r/CCW. There's a good chance you're asking what gun you should buy/carry. The answer is a Glock 19.")
         print("Replied to '" + submission.title + "'")
         record_commented(submission.id)
         print("Sleeping 500 seconds")
         sleep(500)
       except:
         "Couldn't reply for some reason"
-    sleep
-
 
 def main():
   reddit = authenticate()
